@@ -1573,3 +1573,11 @@ efile_sendfile(Efile_error* errInfo, int in_fd, int out_fd,
 	return set_error(errInfo);
     }
 }
+
+int
+efile_fallocate(Efile_error* errInfo, int fd, Sint64 offset, Sint64 length)
+{
+    /* posix_fallocate is not available on Windows, do nothing */
+    errno = ERROR_SUCCESS;
+    return check_error(0, errInfo);
+}

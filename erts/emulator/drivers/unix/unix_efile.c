@@ -1526,3 +1526,12 @@ efile_sendfile(Efile_error* errInfo, int in_fd, int out_fd,
     return check_error(-1, errInfo);
 }
 #endif
+int
+efile_fallocate(Efile_error* errInfo, int fd, Sint64 offset, Sint64 length)
+{
+#ifdef HAVE_POSIX_FALLOCATE
+    return check_error(posix_fallocate(fd, offset, length), errInfo);
+#else
+    return check_error(0, errInfo);
+#endif
+}
