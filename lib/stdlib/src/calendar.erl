@@ -191,8 +191,8 @@ iso_week_number() ->
 -spec iso_week_number(t_date()) -> t_yearweeknum().
 iso_week_number({Year, Month, Day}) ->
     D = date_to_gregorian_days({Year, Month, Day}),
-    W01_1_Year = gregorian_days_of_w01_1(Year),
-    W01_1_NextYear = gregorian_days_of_w01_1(Year + 1),
+    W01_1_Year = gregorian_days_of_iso_w01_1(Year),
+    W01_1_NextYear = gregorian_days_of_iso_w01_1(Year + 1),
     if W01_1_Year =< D andalso D < W01_1_NextYear ->
 	    % Current Year Week 01..52(,53)
 	    {Year, (D - W01_1_Year) div 7 + 1};
@@ -418,10 +418,10 @@ dty(Y, _D1, D2) ->
     {Y, D2}.
 
 %% 
-%% The Gregorian days of the first day of the first week.
+%% The Gregorian days of the iso week 01 day 1 for a given year.
 %% 
--spec gregorian_days_of_w01_1(year()) -> non_neg_integer().
-gregorian_days_of_w01_1(Year) ->
+-spec gregorian_days_of_iso_w01_1(year()) -> non_neg_integer().
+gregorian_days_of_iso_w01_1(Year) ->
     D0101 = date_to_gregorian_days(Year, 1, 1),
     DOW = day_of_the_week(Year, 1, 1),
     if DOW =< 4 ->
